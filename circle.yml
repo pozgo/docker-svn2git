@@ -1,0 +1,15 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker info && docker version
+
+test:
+  pre:
+    - docker build -t polinux/svn2git:circleci .
+
+  override:
+  # Start svn2git
+    - docker run -ti --name svn2git polinux/svn2git:circleci svn2git --help
